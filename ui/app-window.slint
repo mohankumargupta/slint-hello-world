@@ -1,0 +1,51 @@
+import { Button, VerticalBox, GridBox, HorizontalBox } from "std-widgets.slint";
+
+global Constants {
+    out property <int> num-buttons: 3;
+    out property <[string]> labels: ["First", "Second", "Third"];
+}
+
+component QuickLinkItem {
+    width: 200px;
+    height: 200px;
+    in property <string> label: "Quick Link"; 
+    
+    VerticalBox {
+        Rectangle {
+            width: parent.width;
+            height: parent.height;
+            background: #0025ff;
+            border-radius: 8px;
+            
+            Image {
+                width: 100px;
+                height: 100px;
+                x: (parent.width - self.width) / 2;  // Center horizontally
+                y: (parent.height - self.height) / 2;  // Center vertically
+                source: @image-url("../icons/vscode-alt.svg");
+            }
+        }
+
+        Text {
+            text: root.label;
+            horizontal-alignment: center;
+            font-size: 16px;
+            color: black;
+        }
+    }
+}
+
+export component AppWindow inherits Window {
+    width: 800px;
+    height: 640px;
+
+    VerticalBox {
+        HorizontalBox {
+            alignment: space-around;
+            for item[index] in Constants.num-buttons: QuickLinkItem {
+              label: Constants.labels[index];
+            }
+        }
+    }
+}
+

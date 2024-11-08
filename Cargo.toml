@@ -1,0 +1,27 @@
+[package]
+name = "slint-rust-template"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+slint = "1.8.0"
+
+[build-dependencies]
+slint-build = "1.8.0"
+
+
+[profile.release]
+# Link time optimization
+lto = true
+# Enable optimization for size
+opt-level = "z"
+# Enable symbol stripping
+strip = true
+# Enable panic immediate abort
+panic = "abort"
+# Disable debug info
+debug = false
+# Enable codegen units = 1
+codegen-units = 1
