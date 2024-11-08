@@ -2,7 +2,6 @@ import { Button, VerticalBox, GridBox, HorizontalBox } from "std-widgets.slint";
 
 global Constants {
     out property <int> num-buttons: 3;
-    out property <[string]> labels: ["First", "Second", "Third"];
 }
 
 component QuickLinkItem {
@@ -39,11 +38,13 @@ export component AppWindow inherits Window {
     width: 800px;
     height: 640px;
 
+    in property <[string]> labels: ["python", "rust", "solidpython2"];
+
     VerticalBox {
         HorizontalBox {
             alignment: space-around;
             for item[index] in Constants.num-buttons: QuickLinkItem {
-              label: Constants.labels[index];
+              label: root.labels[index];
             }
         }
     }
