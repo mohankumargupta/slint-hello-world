@@ -2,5 +2,6 @@
     "[rust]": {
         "editor.defaultFormatter": "rust-lang.rust-analyzer"
     },
-    "git.postCommitCommand": "push"
+    "git.postCommitCommand": "push",
+    "editor.formatOnSave": true
 }
