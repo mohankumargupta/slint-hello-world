@@ -7,21 +7,27 @@ global Constants {
 component QuickLinkItem {
     width: 200px;
     height: 200px;
-    in property <string> label: "Quick Link"; 
-    
+    in property <string> label: "Quick Link";
+    callback clicked(string);
+
     VerticalBox {
         Rectangle {
             width: parent.width;
             height: parent.height;
             background: #0025ff;
             border-radius: 8px;
-            
-            Image {
-                width: 100px;
-                height: 100px;
-                x: (parent.width - self.width) / 2;  // Center horizontally
+            TouchArea {
+                clicked => {
+                    debug("Rectangle clicked:", root.label);
+                    root.clicked(root.label);
+                }
+                Image {
+                    width: 100px;
+                    height: 100px;
+                    x: (parent.width - self.width) / 2;  // Center horizontally
                 y: (parent.height - self.height) / 2;  // Center vertically
                 source: @image-url("../icons/vscode-alt.svg");
+                }
             }
         }
 
@@ -39,14 +45,17 @@ export component AppWindow inherits Window {
     height: 640px;
 
     in property <[string]> labels: ["python", "rust", "solidpython2"];
+    callback launch(string);
 
     VerticalBox {
         HorizontalBox {
             alignment: space-around;
             for item[index] in Constants.num-buttons: QuickLinkItem {
-              label: root.labels[index];
+                label: root.labels[index];
+                clicked(label) => {
+                    root.launch(label)
+                }
             }
         }
     }
 }
-

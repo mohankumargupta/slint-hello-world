@@ -1,7 +1,7 @@
 // Prevent console window in addition to Slint window in Windows release builds when, e.g., starting the app via file manager. Ignored on other platforms.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use slint::{SharedString, VecModel};
+use slint::{ComponentHandle, SharedString, VecModel};
 use std::error::Error;
 use std::fs;
 
@@ -43,6 +43,15 @@ fn get_vscode_dirs() -> std::io::Result<Option<Vec<String>>> {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let ui = AppWindow::new()?;
+    ui.on_launch(move |label| {
+        println!("Need to launch: {label}");
+    });
+
+    //let weak = ui.as_weak();
+
+    // ui.on_rectangle_clicked(move |label| {
+    //     println!("Rectangle {} clicked", label);
+    // });
 
     let vscodedirs = get_vscode_dirs()?;
 
