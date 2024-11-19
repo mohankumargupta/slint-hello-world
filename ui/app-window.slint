@@ -48,12 +48,45 @@ export component AppWindow inherits Window {
     callback launch(string);
 
     VerticalBox {
+        spacing: 100px;
+        alignment: center;
         HorizontalBox {
             alignment: space-around;
             for item[index] in Constants.num-buttons: QuickLinkItem {
                 label: root.labels[index];
                 clicked(label) => {
                     root.launch(label)
+                }
+            }
+        }
+
+        VerticalBox {
+            spacing: 50px;
+            Text {
+                text: "Launch VSCode Portable";
+                font-size: 24px;
+                horizontal-alignment: center;
+            }
+
+            HorizontalBox {
+                alignment: center;
+                Rectangle {
+                    width: 400px;
+                    height: 40px;
+                    border-width: 2px;
+                    border-color: purple; // Border color
+                    
+                    
+                    TextInput {
+                        width: parent.width - 10px; // Add padding for the TextInput
+                        height: parent.height - 10px; // Add padding for the TextInput
+                        text: "";
+                        
+                        //horizontal-alignment: center; // Centers the text inside the TextInput
+                        vertical-alignment: center;   // Centers the text inside the TextInput
+                        accepted => {
+                        }
+                    }
                 }
             }
         }

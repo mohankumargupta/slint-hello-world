@@ -4,6 +4,7 @@
 use slint::{ComponentHandle, SharedString, VecModel};
 use std::error::Error;
 use std::fs;
+use std::process::Command;
 
 slint::include_modules!();
 
@@ -41,17 +42,20 @@ fn get_vscode_dirs() -> std::io::Result<Option<Vec<String>>> {
     })
 }
 
+fn launch(folder: &str) {
+    let dest = format!("vscode-{folder}");
+    if let Some(download_dir) = dirs::download_dir() {
+        let vscode_binary = download_dir.join(dest).join("Code.exe");
+        Command::new(vscode_binary).spawn().unwrap();
+    }
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
     let ui = AppWindow::new()?;
     ui.on_launch(move |label| {
         println!("Need to launch: {label}");
+        launch(label.as_str());
     });
-
-    //let weak = ui.as_weak();
-
-    // ui.on_rectangle_clicked(move |label| {
-    //     println!("Rectangle {} clicked", label);
-    // });
 
     let vscodedirs = get_vscode_dirs()?;
 
